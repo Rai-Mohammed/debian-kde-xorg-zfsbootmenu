@@ -60,11 +60,11 @@ Bash script to install Debian 13, KDE Plasma 6, xserver-xorg with ZFS on Root an
 
    ```bash   
    root@debian:~# apt install curl
-   root@debian:~# curl -O https://raw.githubusercontent.com/Rai-Mohammed/debian13-kde6-xorg-zfsbootmenu/main/debian13-kde6-xorg-zfsbootmenu.sh
+   root@debian:~# curl -O https://raw.githubusercontent.com/Rai-Mohammed/debian-kde-xorg-zfsbootmenu/main/debian-kde-xorg-zfsbootmenu.sh
 
    # Make the necessary changes to the installation script
-   root@debian:~# nano debian13-kde6-xorg-zfsbootmenu.sh
+   root@debian:~# nano debian-kde-xorg-zfsbootmenu.sh
 
-   root@debian:~# chmod +x debian13-kde6-xorg-zfsbootmenu.sh
-   root@debian:~# ./debian13-kde6-xorg-zfsbootmenu.sh
+   root@debian:~# chmod +x debian-kde-xorg-zfsbootmenu.sh
+   root@debian:~# ./debian-kde-xorg-zfsbootmenu.sh
    ```
