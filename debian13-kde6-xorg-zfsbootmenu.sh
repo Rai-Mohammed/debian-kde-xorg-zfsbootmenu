@@ -264,22 +264,54 @@ echo "Installing system utilities..."
 apt install -y systemd-timesyncd net-tools iproute2 isc-dhcp-client iputils-ping traceroute curl wget dnsutils
 apt install -y ethtool ifupdown tcpdump nmap nano htop openssh-server git tmux
 
-apt install -y  tasksel
-# add full Debian KDE Desktop setup (tasksel)
-	echo "tasksel installer : add a full Debian KDE Desktop setup"
-	tasksel install task-kde-desktop
+# Installing KDE Plasma 6 Desktop environment with Xorg and Support compatibility for running individual X11 applications
+echo "Installing  KDE Plasma 6 Desktop environment with Xorg"
+echo "and Support compatibility for running individual X11 applications..."
+
+export DEBIAN_FRONTEND=noninteractive
+apt install -y kde-plasma-desktop dbus-x11 qt6-virtualkeyboard-plugin libreoffice libreoffice-qt6 snapd
+apt install -y hunspell-ar hunspell-en-us hunspell-fr libreoffice-help-en-us libreoffice-help-fr libreoffice-l10n-ar libreoffice-l10n-fr hyphen-en-us hyphen-fr snapd 
+
+# Configure libreoffice variables
+    cat  > /usr/bin/libreoffice <<EOF_LIBREOFFICE
+    # For libreoffice-qt6 plugin
+    SAL_USE_VCLPLUGIN=qt6
+    export SAL_USE_VCLPLUGIN
+
+    # Increse the resolustion of libreoffice
+    SAL_FORCEDPI=120
+    export SAL_FORCEDPI
+EOF_LIBREOFFICE
+
+# Config IBus input method framework - setting X11-specific environment variables
+touch /etc/environment.d/99-ibus.conf
+    cat  > /etc/environment.d/99-ibus.conf <<EOF_IBUS_ENV
+    # Unset legacy IBus variables for Wayland
+    GTK_IM_MODULE=
+    QT_IM_MODULE=
+EOF_IBUS_ENV
+    
+# Creating ~/.xinitrc to explicitly launch KDE with a D-Bus session:
+echo "Creating /home/$USERNAME/.xinitrc to explicitly launch KDE with a D-Bus session..."
+echo 'exec dbus-launch --exit-with-session startplasma-x11' > /home/$USERNAME/.xinitrc
+chmod +x ~/.xinitrc
+
+usermod -aG sudo,audio,cdrom,dip,floppy,plugdev,operator,netdev,video,render $USERNAME
+export DEBIAN_FRONTEND=interactive
+sudo su $USERNAME -c "snap install bare core18 core20 core22 core24 mesa-2404 telegram-desktop"
+
 # Installing KDE Plasma 6 Desktop environment with xserver-xorg
 # echo "Installing KDE Plasma 6 Desktop environment with xserver-xorg..."
-# apt install -y sddm dbus xorg xserver-xorg plasma-desktop kde-config-sddm plasma-workspace task-kde-desktop
-# apt install -y dbus-user-session dbus-x11 kwin-x11 qt6-virtualkeyboard-plugin
+# apt install -y sddm dbus   
+# apt install -y dbus-user-session dbus-x11 
 
- systemctl start sddm
- systemctl enable sddm
- systemctl status sddm
+systemctl start sddm
+systemctl enable sddm
+systemctl status sddm
 
-# systemctl start dbus
-# systemctl enable dbus
-# systemctl status dbus
+systemctl start dbus
+systemctl enable dbus
+systemctl status dbus
 
 # Installing IDE Pycharm-Community | PyCharm Installation Instructions : From https://wiki.debian.org/JetBrains
 echo "Installing IDE Pycharm-Community..."
