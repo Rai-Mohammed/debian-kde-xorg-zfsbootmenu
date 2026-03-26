@@ -324,7 +324,7 @@ chmod +x ~/.xinitrc
 
 usermod -aG sudo,audio,cdrom,dip,floppy,plugdev,operator,netdev,video,render $USERNAME
 export DEBIAN_FRONTEND=interactive
-sudo su $USERNAME -c "snap install bare core18 core20 core22 core24 mesa-2404 telegram-desktop"
+su $USERNAME -c "snap install bare core18 core20 core22 core24 mesa-2404 telegram-desktop"
 
 # Installing KDE Plasma 6 Desktop environment with xserver-xorg
 # echo "Installing KDE Plasma 6 Desktop environment with xserver-xorg..."
@@ -338,6 +338,11 @@ systemctl status sddm
 systemctl start dbus
 systemctl enable dbus
 systemctl status dbus
+
+export DEBIAN_FRONTEND=noninteractive
+# Upgrade KDE plasma 6.5.6 release for Ubuntu 25.10
+add-apt-repository ppa:kubuntu-ppa/backports -y
+apt full-upgrade -y
 
 # Installing IDE Pycharm-Community | PyCharm Installation Instructions : From https://wiki.debian.org/JetBrains
 echo "Installing IDE Pycharm-Community..."
