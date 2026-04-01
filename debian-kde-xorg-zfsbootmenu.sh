@@ -112,6 +112,8 @@ zpool status
 
  zfs create -o mountpoint=/home/$USERNAME $ZPOOL_NAME/home/$USERNAME
 
+ zpool set cachefile=/etc/zfs/zpool.cache $ZPOOL_NAME
+
  zpool set bootfs=$ZPOOL_NAME/ROOT/$OS_ID $ZPOOL_NAME
 
 # Export, then re-import with a temporary mountpoint of $MOUNT_POINT
