@@ -301,6 +301,8 @@ echo "and Support compatibility for running individual X11 applications..."
 export DEBIAN_FRONTEND=noninteractive
 apt install -y kde-plasma-desktop dbus-x11 qt6-virtualkeyboard-plugin libreoffice libreoffice-qt6 libavcodec-extra
 apt install -y hunspell-ar hunspell-en-us hunspell-fr libreoffice-help-en-us libreoffice-help-fr libreoffice-l10n-ar libreoffice-l10n-fr hyphen-en-us hyphen-fr snapd 
+apt install -y fcitx5 fcitx5-config-qt kde-config-fcitx5
+apr remove -y ibus
 
 # Configure libreoffice variables
     cat  > /usr/bin/libreoffice <<EOF_LIBREOFFICE
